@@ -294,155 +294,10 @@ line-height: 1;
 ---
 
 
-## 레이아웃 시스템
-
-### 여백 기준 (padding/margin)
-```css
-/* 슬라이드 전체 여백 */
-padding: 48pt;
-
-/* 섹션 간 여백 */
-gap: 32pt;
-
-/* 요소 간 여백 */
-gap: 16pt;
-
-/* 텍스트 블록 내 여백 */
-gap: 8pt;
-```
-
-### 그리드 시스템
-```css
-/* 2단 레이아웃 */
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 32pt;
-
-/* 3단 레이아웃 */
-grid-template-columns: repeat(3, 1fr);
-
-/* 비대칭 레이아웃 (40:60) */
-grid-template-columns: 2fr 3fr;
-
-/* 비대칭 레이아웃 (30:70) */
-grid-template-columns: 1fr 2.3fr;
-```
-
----
-
-## 디자인 컴포넌트
-
-### 1. 뱃지/태그
-```html
-<p style="
-  display: inline-block;
-  padding: 6pt 14pt;
-  border: 1px solid #1a1a1a;
-  border-radius: 20pt;
-  font-size: 10pt;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-">PRESENTATION</p>
-```
-
-### 2. 섹션 넘버
-```html
-<p style="
-  display: inline-block;
-  padding: 4pt 12pt;
-  background: #1a1a1a;
-  color: #ffffff;
-  border-radius: 4pt;
-  font-size: 10pt;
-  font-weight: 600;
-">SECTION 1</p>
-```
-
-### 3. 로고 영역
-```html
-<div style="display: flex; align-items: center; gap: 8pt;">
-  <div style="
-    width: 20pt;
-    height: 20pt;
-    background: #1a1a1a;
-    border-radius: 4pt;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  ">
-    <p style="color: #fff; font-size: 12pt;">*</p>
-  </div>
-  <p style="font-size: 12pt; font-weight: 600;">LogoName</p>
-</div>
-```
-
-### 4. 아이콘 버튼
-```html
-<div style="
-  width: 32pt;
-  height: 32pt;
-  border: 1px solid #1a1a1a;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-">
-  <p style="font-size: 14pt;">↗</p>
-</div>
-```
-
-### 5. 구분선
-```html
-<div style="
-  width: 100%;
-  height: 1pt;
-"></div>
-```
-
-### 6. 정보 그리드
-```html
-<div style="display: flex; gap: 48pt;">
-  <div>
-    <p style="font-size: 10pt; color: #999; margin-bottom: 4pt;">Contact</p>
-    <p style="font-size: 12pt; font-weight: 500;">334556774</p>
-  </div>
-  <div>
-    <p style="font-size: 10pt; color: #999; margin-bottom: 4pt;">Date</p>
-    <p style="font-size: 12pt; font-weight: 500;">March 2025</p>
-  </div>
-</div>
-```
-
----
 
 ## 고급 디자인 패턴
 
-### 비대칭 레이아웃
-시선을 끄는 독창적인 구성
-```css
-/* 황금비율 기반 */
-grid-template-columns: 1fr 1.618fr;
 
-
-### 그라데이션 오버레이
-```html
-<div style="
-  background: linear-gradient(to right, #1a1a1a 0%, transparent 60%);
-  position: absolute;
-  inset: 0;
-"></div>
-```
-
-### 카드 스타일
-```html
-<div style="
-  background: #ffffff;
-  border-radius: 12pt;
-  padding: 24pt;
-  box-shadow: 0 2pt 8pt rgba(0,0,0,0.08);
-"></div>
-```
 
 ### 인포그래픽 디자인 레퍼런스
 https://pin.it/6eVrzwHOT
@@ -453,29 +308,6 @@ https://pin.it/5dJ97z6BJ
 
 ---
 
-## 텍스트 사용 규칙
-
-### 필수 태그
-```html
-<!-- 모든 텍스트는 반드시 다음 태그 안에 -->
-<p>, <h1>-<h6>, <ul>, <ol>, <li>
-
-<!-- 금지 - PowerPoint에서 무시됨 -->
-<div>텍스트</div>
-<span>텍스트</span>
-```
-
-### 권장 사용법
-```html
-<!-- 좋은 예 -->
-<h1 style="...">제목</h1>
-<p style="...">본문 텍스트</p>
-
-<!-- 나쁜 예 -->
-<div style="...">텍스트 직접 입력</div>
-```
-
----
 
 ## 출력 및 파일 구조
 
@@ -510,8 +342,7 @@ slides/
 
 ## 주의사항
 
-1. **CSS 그라데이션**: PowerPoint 변환 시 지원 안됨 - 배경 이미지로 대체
-2. **웹폰트**: Pretendard CDN 링크 항상 포함
-3. **이미지 경로**: 절대 경로 또는 URL 사용
-4. **호환성**: 모든 색상에 # 포함
-5. **텍스트 규칙**: div/span에 직접 텍스트 금지
+1. **웹폰트**: Pretendard CDN 링크 항상 포함
+2. **이미지 경로**: 절대 경로 또는 URL 사용
+3. **호환성**: 모든 색상에 # 포함
+4. **텍스트 규칙**: div/span에 직접 텍스트 금지
