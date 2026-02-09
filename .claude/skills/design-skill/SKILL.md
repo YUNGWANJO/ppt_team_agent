@@ -444,6 +444,10 @@ grid-template-columns: 1fr 1.618fr;
 "></div>
 ```
 
+### 인포그래픽 디자인 레퍼런스
+https://pin.it/6eVrzwHOT
+
+
 ---
 
 ## 텍스트 사용 규칙
