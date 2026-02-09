@@ -447,6 +447,9 @@ grid-template-columns: 1fr 1.618fr;
 ### 인포그래픽 디자인 레퍼런스
 https://pin.it/6eVrzwHOT
 
+### 조형 디자인 레퍼런스
+https://pin.it/5dJ97z6BJ
+
 
 ---
 
