@@ -65,9 +65,6 @@ ppt_team_agent/
 
 MIT License
 
-## 👤 참조
-
-Builder Josh
 
 ---
 
