@@ -43,3 +43,5 @@ ENV/
 # PPT temporary files
 ~$*.ppt*
 
+# Claude Code local settings
+.claude/settings.local.json
