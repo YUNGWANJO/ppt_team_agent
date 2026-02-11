@@ -73,18 +73,18 @@ description: "기획서(텍스트, 파일)를 고퀄리티 PPT 디자인으로 �
 ■ 컬러 팔레트
   Primary:     1E2761  (딥 네이비)
   Secondary:   7A82AB  (소프트 퍼플그레이)
-  Accent:      E8543E  (코랄 레드)
+  Accent:      00D740  (네온 그린)
   Background:  F5F5F7  (라이트 그레이)
   Dark BG:     0D1117  (다크 차콜)
-  Text Dark:   1A1A2E  (거의 블랙)
+  Text Dark:   121212  (거의 블랙)
   Text Light:  FFFFFF  (화이트)
   Text Muted:  6B7280  (뮤트 그레이)
 
 ■ 폰트
-  제목(Header):  Trebuchet MS (Bold, 36-44pt)
-  본문(Body):    Calibri (Regular, 14-16pt)
-  캡션(Caption): Calibri Light (10-12pt)
-  강조 숫자:      Georgia (Bold, 48-72pt)
+  제목(Header):  pretendard (Bold, 36-44pt)
+  본문(Body):    pretendard (Regular, 14-16pt)
+  캡션(Caption): pretendard Light (10-12pt)
+  강조 숫자:      pretendard (Bold, 48-72pt)
 
 ■ 레이아웃
   슬라이드 비율:  16:9 (LAYOUT_16x9, 10" × 5.625")
@@ -97,7 +97,7 @@ description: "기획서(텍스트, 파일)를 고퀄리티 PPT 디자인으로 �
 사용자가 아래와 같이 브랜드 에셋을 지정할 수 있다:
 
 ```
-"우리 브랜드 컬러는 #2563EB(파랑), #F59E0B(노랑)이고,
+"우리 브랜드 컬러는 #2462F7(파랑), #00D740(초록)이고,
 폰트는 제목에 Pretendard Bold, 본문에 Pretendard Regular을 써줘"
 ```
 
@@ -147,10 +147,10 @@ const BRAND = {
   colors: {
     primary: "1E2761",
     secondary: "7A82AB",
-    accent: "E8543E",
+    accent: "00D740",
     bg: "F5F5F7",
     darkBg: "0D1117",
-    textDark: "1A1A2E",
+    textDark: "121212",
     textLight: "FFFFFF",
     textMuted: "6B7280",
   },
