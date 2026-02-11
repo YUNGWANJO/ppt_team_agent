@@ -1,348 +1,324 @@
 ---
-name: design-skill
-description: 프레젠테이션 슬라이드를 미려한 HTML로 디자인. 슬라이드 HTML 생성, 시각적 디자인, 레이아웃 구성이 필요할 때 사용.
+name: design-to-pptx
+description: "기획서(텍스트, 파일)를 고퀄리티 PPT 디자인으로 자동 변환하는 스킬. 사용자가 기획 문서, 텍스트, 메모 등을 첨부하면 브랜드 에셋(컬러, 폰트, 로고)을 반영한 프로페셔널한 .pptx 파일을 생성한다. 디자인 레퍼런스(스크린샷, 링크)도 참고 가능. 사용자가 'PPT 만들어줘', '발표자료 디자인', '기획서를 슬라이드로', '프레젠테이션 제작', 'deck 만들어줘', '슬라이드 디자인' 등을 언급할 때 이 스킬을 사용하라. 기획 내용이 텍스트든 파일이든 상관없이 트리거된다."
 ---
 
-# Design Skill - 전문가 수준의 프레젠테이션 디자인 시스템
+# Design-to-PPTX Skill
 
-최고 수준의 비즈니스 프레젠테이션을 위한 HTML 슬라이드 디자인 스킬입니다.
-미니멀하고 세련된 디자인, 전문적인 타이포그래피, 정교한 레이아웃을 제공합니다.
+기획자가 작성한 내용을 프로페셔널한 PPT 디자인으로 변환한다.
 
----
+## 워크플로우 개요
 
-## 핵심 디자인 철학
-
-### 1. Less is More
-- 불필요한 장식 요소 제거
-- 콘텐츠가 주인공이 되는 디자인
-- 여백(Whitespace)을 적극 활용
-- 시각적 계층 구조 명확화
-
-### 2. 타이포그래피 중심 디자인
-- Pretendard를 기본 폰트로 사용
-- 폰트 크기 대비로 시각적 임팩트 생성
-- 자간과 행간의 섬세한 조절
-- 웨이트 변화로 강조점 표현
-
-### 3. 전략적 색상 사용
-- 제한된 색상 팔레트 (2-3색)
-- 모노톤 기반 + 포인트 컬러
-- 배경색으로 분위기 연출
-- 고대비로 가독성 확보
-
----
-
-## 기본 설정
-
-### 슬라이드 크기 (16:9 기본)
-```html
-<body style="width: 720pt; height: 405pt;">
 ```
-
-### 지원 비율
-| 비율 | 크기 | 용도 |
-|------|------|------|
-| 16:9 | 720pt × 405pt | 기본, 모니터/화면 |
-| 4:3 | 720pt × 540pt | 구형 프로젝터 |
-| 16:10 | 720pt × 450pt | 맥북 |
-
-### 기본 폰트 스택
-```css
-font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-```
-
-### Pretendard 웹폰트 CDN
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+입력 분석 → 콘텐츠 구조화 → 디자인 방향 결정 → 슬라이드 생성 → QA → 출력
 ```
 
 ---
 
-## 타이포그래피 시스템
+## Step 1: 입력 분석
 
-기본 폰트: Pretendard
+사용자 입력은 다양한 형태로 올 수 있다:
 
-폰트 크기 스케일
-용도크기웨이트사용 예시Title Slide72ptBold (700)표지 슬라이드 메인 타이틀Section Header56ptSemiBold (600)챕터 구분 슬라이드 제목Slide Title44ptSemiBold (600)일반 슬라이드 제목Subtitle32ptMedium (500)슬라이드 부제목, 강조 제목Body Large28ptRegular (400)주요 내용, 핵심 메시지Body Medium24ptRegular (400)기본 본문, 불릿 포인트Body Small20ptRegular (400)세부 설명, 보조 텍스트Caption16ptRegular (400)출처, 각주, 페이지 번호Fine Print14ptRegular (400)저작권, 법적 고지사항
-타이포그래피 규칙
-1. 슬라이드별 계층 구조
+- **텍스트**: 채팅에 직접 입력한 기획 내용
+- **파일**: .txt, .md, .docx, .pdf 등의 기획서
+- **레퍼런스**: 디자인 참고 스크린샷 또는 URL
 
-표지 슬라이드: Title Slide(72pt) + Subtitle(32pt) + Caption(16pt)
-섹션 슬라이드: Section Header(56pt) + Body Small(20pt)
-일반 슬라이드: Slide Title(44pt) + Body Medium(24pt) + Caption(16pt)
-데이터 슬라이드: Slide Title(44pt) + Body Small(20pt) + Fine Print(14pt)
+### 입력 파싱 순서
 
-2. 웨이트 사용 원칙
+1. 첨부 파일이 있으면 `/mnt/user-data/uploads/`에서 읽어 내용 추출
+2. 텍스트 입력이 있으면 그대로 사용
+3. 디자인 레퍼런스가 있으면 분석하여 톤/레이아웃/컬러 참고
+4. 기획 내용에서 **핵심 메시지, 섹션 구분, 데이터, 강조 포인트**를 추출
 
-Bold(700): 표지 슬라이드 타이틀에만 사용
-SemiBold(600): 모든 슬라이드 제목 및 섹션 헤더
-Medium(500): 부제목, 강조 텍스트, 라벨
-Regular(400): 모든 본문 및 설명 텍스트
+### 레퍼런스 활용
 
-3. PPT 적용 가이드
-
-가독성: 청중이 3m 거리에서도 읽을 수 있도록 Body는 최소 24pt 이상 권장
-한 슬라이드당: 최대 3가지 폰트 크기만 사용 (제목, 본문, 캡션)
-대비: 제목과 본문 간 최소 12pt 이상 크기 차이 유지
-일관성: 동일한 목적의 텍스트는 전체 슬라이드에서 동일한 크기/웨이트 사용
-여백: 텍스트 주변에 충분한 여백 확보 (최소 슬라이드 너비의 10%)
-
-4. 색상 대비 권장
-
-제목: 고대비 컬러 사용 (#121212 또는 브랜드 컬러)
-본문: 중간 대비 (#333333 ~ #666666)
-캡션: 낮은 대비 (#999999)
-
-### 폰트 크기 스케일
-| 용도 | 크기 | 웨이트 | 사용 예시 |
-|------|------|--------|----------|
-| Hero Title | 72-96pt | 700-800 | 표지 메인 타이틀 |
-| Section Title | 48-60pt | 700 | 섹션 구분 제목 |
-| Slide Title | 32-40pt | 600-700 | 슬라이드 제목 |
-| Subtitle | 20-24pt | 500 | 부제목, 설명 |
-| Body | 16-20pt | 400 | 본문 텍스트 |
-| Caption | 12-14pt | 400 | 캡션, 출처 |
-| Label | 10-12pt | 500-600 | 뱃지, 태그 |
-
-
-### 자간 설정 (letter-spacing)
-```css
-/* 대형 제목: 타이트하게 */
-letter-spacing: -0.02em;
-
-/* 중형 제목 */
-letter-spacing: -0.01em;
-
-/* 본문: 기본 */
-letter-spacing: 0;
-
-/* 캡션, 레이블: 약간 넓게 */
-letter-spacing: 0.02em;
-```
-
-### 행간 설정 (line-height)
-```css
-/* 제목 */
-line-height: 1.2;
-
-/* 본문 */
-line-height: 1.6 - 1.8;
-
-/* 한 줄 텍스트 */
-line-height: 1;
-```
+사용자가 디자인 레퍼런스를 제공하면:
+- 스크린샷: 레이아웃 구조, 컬러 톤, 타이포그래피 스타일 분석
+- URL: 해당 페이지의 디자인 패턴 참고
+- 레퍼런스의 **분위기와 구조**를 차용하되, 브랜드 에셋을 우선 적용
 
 ---
 
-## 색상 팔레트 시스템
+## Step 2: 콘텐츠 구조화
 
-# PowerPoint Color System Guide
+기획 내용을 슬라이드 단위로 재구성한다.
 
----
+### 슬라이드 구성 원칙
 
-## 핵심 컬러 팔레트
+| 슬라이드 유형 | 용도 | 권장 개수 |
+|--------------|------|----------|
+| 타이틀 | 주제, 부제, 날짜 | 1 |
+| 목차/어젠다 | 발표 흐름 안내 | 0-1 |
+| 콘텐츠 | 본문 내용 | 필요한 만큼 |
+| 데이터/차트 | 수치, 비교, 통계 | 데이터가 있을 때 |
+| 요약/결론 | 핵심 정리, CTA | 1 |
+| 마무리 | 감사, 연락처, Q&A | 0-1 |
 
-### Neutral (그레이스케일)
+### 콘텐츠 분해 규칙
 
-| 토큰명 | HEX | 용도 |
-|--------|-----|------|
-| Neutral/100 | `#FFFFFF` | 기본 배경 |
-| Neutral/98 | `#F7F7FA` | 카드 배경 |
-| Neutral/92 | `#E6E6EB` | 테두리, 구분선 |
-| Neutral/80 | `#C4C4CC` | 비활성 요소 |
-| Neutral/30 | `#45464C` | 본문 텍스트 |
-| Neutral/10 | `#121212` | 제목 텍스트 |
-| Neutral/0 | `#000000` | 순수 검정 |
-
-### Blue (브랜드 컬러)
-
-| 토큰명 | HEX | 용도 |
-|--------|-----|------|
-| Blue/95 | `#F3F6FE` | 포커스 배경 |
-| Blue/85 | `#B9D4FF` | 하이라이트 |
-| Blue/70 | `#68A2FF` | 테두리 강조 |
-| Blue/50 | `#2462F7` | **주요 브랜드 컬러** |
-| Blue/20 | `#0D2254` | 배경 악센트 |
-
-### Green (성공)
-
-| 토큰명 | HEX | 용도 |
-|--------|-----|------|
-| Green/95 | `#EDFEF4` | 성공 배경 |
-| Green/85 | `#A6F3BE` | 하이라이트 |
-| Green/50 | `#13BD47` | 성공 강조 |
-| Green/40 | `#069B33` | 텍스트 강조 |
-
-### Red (오류)
-
-| 토큰명 | HEX | 용도 |
-|--------|-----|------|
-| Red/95 | `#FCE7EC` | 오류 배경 |
-| Red/85 | `#FFA9B9` | 하이라이트 |
-| Red/50 | `#EC2B56` | 오류 강조 |
-| Red/40 | `#BD0A2E` | 텍스트 강조 |
-
-### Orange (경고)
-
-| 토큰명 | HEX | 용도 |
-|--------|-----|------|
-| Orange/95 | `#FFF5EB` | 경고 배경 |
-| Orange/50 | `#FF8A2E` | 경고 강조 |
-| Orange/40 | `#E56D0A` | 텍스트 강조 |
-
-### Alpha 컬러
-
-| 토큰명 | RGBA | 용도 |
-|--------|------|------|
-| Black-alpha-60 | `rgba(0, 0, 0, 0.60)` | 기본 딤 처리 |
-| White-alpha-80 | `rgba(255, 255, 255, 0.80)` | 하이라이트 |
+- 한 슬라이드에 **하나의 핵심 메시지**만 담는다
+- 텍스트가 길면 여러 슬라이드로 쪼갠다
+- 숫자/통계는 별도 슬라이드로 분리하여 임팩트를 준다
+- 나열형 내용은 아이콘+텍스트 그리드로 시각화한다
 
 ---
 
-## PPT 적용 컬러 시스템
+## Step 3: 디자인 방향 결정
 
-### 배경 (Background)
+### 브랜드 에셋 (기본값)
 
-| 용도 | Light | Dark | 사용 예시 |
-|------|-------|------|----------|
-| Primary | `#FFFFFF` | `#000000` | 슬라이드 기본 배경 |
-| Secondary | `#F7F7FA` | `#121212` | 섹션 슬라이드 |
-| Accent | `#0D2254` | `#B9D4FF` | 표지, 섹션 구분 |
-| Focus | `#F3F6FE` | `#051843` | 하이라이트 영역 |
-| Warning | `#FFF5EB` | `#582F00` | 주의사항 박스 |
-| Dim | `rgba(0,0,0,0.6)` | `rgba(0,0,0,0.6)` | 이미지 오버레이 |
+아래는 기본 브랜드 에셋이다. 사용자가 별도 지정하면 그것을 우선 적용한다.
 
-### 텍스트 (Text)
+```
+■ 컬러 팔레트
+  Primary:     1E2761  (딥 네이비)
+  Secondary:   7A82AB  (소프트 퍼플그레이)
+  Accent:      00D740  (네온 그린)
+  Background:  F5F5F7  (라이트 그레이)
+  Dark BG:     0D1117  (다크 차콜)
+  Text Dark:   121212  (거의 블랙)
+  Text Light:  FFFFFF  (화이트)
+  Text Muted:  6B7280  (뮤트 그레이)
 
-| 용도 | Light | Dark | 사용 예시 |
-|------|-------|------|----------|
-| Primary | `#121212` | `#EDEDED` | 제목, 주요 본문 |
-| Secondary | `#45464C` | `#C4C4CC` | 부제목, 보조 설명 |
-| Highlight | `#2462F7` | `#B9D4FF` | 중요 키워드 |
-| Success | `#13BD47` | `#A6F3BE` | 성공 메시지 |
-| Warning | `#E56D0A` | `#FFD9B3` | 경고 메시지 |
-| Error | `#BD0A2E` | `#FFA9B9` | 오류 메시지 |
-| Inverse | `#FFFFFF` | `#FFFFFF` | 어두운 배경용 |
+■ 폰트
+  제목(Header):  pretendard (Bold, 36-44pt)
+  본문(Body):    pretendard (Regular, 14-16pt)
+  캡션(Caption): pretendard Light (10-12pt)
+  강조 숫자:      pretendard (Bold, 48-72pt)
 
-### 테두리 & 구분선 (Border)
+■ 레이아웃
+  슬라이드 비율:  16:9 (LAYOUT_16x9, 10" × 5.625")
+  여백(Margin):   최소 0.5"
+  요소 간격:      0.3" ~ 0.5"
+```
 
-| 용도 | Light | Dark | 사용 예시 |
-|------|-------|------|----------|
-| Default | `#E6E6EB` | `#323338` | 카드 테두리 |
-| Strong | `#C4C4CC` | `#45464C` | 강조 테두리 |
-| Highlight | `#68A2FF` | `#68A2FF` | 선택/활성 상태 |
+### 브랜드 에셋 커스터마이징
+
+사용자가 아래와 같이 브랜드 에셋을 지정할 수 있다:
+
+```
+"우리 브랜드 컬러는 #2462F7(파랑), #00D740(초록)이고,
+폰트는 제목에 Pretendard Bold, 본문에 Pretendard Regular을 써줘"
+```
+
+이 경우 기본값 대신 사용자 지정값을 적용한다. 부분 지정 시 나머지는 기본값 유지.
+
+### 디자인 톤 결정
+
+기획 내용의 성격에 따라 톤을 자동 선택한다:
+
+| 콘텐츠 성격 | 디자인 톤 | 특징 |
+|------------|----------|------|
+| 비즈니스 보고 | Executive Minimal | 다크 타이틀, 라이트 콘텐츠, 절제된 악센트 |
+| 제품 소개 | Bold & Modern | 대담한 컬러 블록, 큰 이미지 영역, 임팩트 타이포 |
+| 데이터 분석 | Clean Analytical | 차트 중심, 여백 활용, 뮤트 톤 |
+| 아이디어 제안 | Creative Fresh | 비대칭 레이아웃, 컬러 악센트, 아이콘 활용 |
+| 교육/가이드 | Structured Clear | 단계별 구조, 번호 강조, 일관된 그리드 |
+
+레퍼런스가 제공되면 레퍼런스의 톤을 최우선으로 따른다.
 
 ---
 
-## 사용 가이드라인
+## Step 4: 슬라이드 생성
 
-### 1. 슬라이드별 컬러 적용
+**반드시 pptx 스킬의 pptxgenjs.md 가이드를 참조한다:**
 
-**표지 슬라이드**
 ```
-배경: #0D2254 (Navyblue)
-제목: #FFFFFF (White)
-부제: #C4C4CC (Neutral/80)
+Read /mnt/skills/public/pptx/pptxgenjs.md
 ```
 
-**일반 콘텐츠**
+### 생성 전 체크리스트
+
+- [ ] `npm install -g pptxgenjs react react-dom react-icons sharp` 설치 확인
+- [ ] 모든 hex 컬러에서 `#` 제거 확인
+- [ ] 옵션 객체 재사용 금지 (매번 새로 생성)
+- [ ] `breakLine: true`로 멀티라인 처리
+- [ ] 유니코드 불릿("•") 대신 `bullet: true` 사용
+
+### 코드 구조 템플릿
+
+매 생성 시 아래 구조를 따른다:
+
+```javascript
+const pptxgen = require("pptxgenjs");
+
+// ─── 브랜드 에셋 정의 ───
+const BRAND = {
+  colors: {
+    primary: "1E2761",
+    secondary: "7A82AB",
+    accent: "00D740",
+    bg: "F5F5F7",
+    darkBg: "0D1117",
+    textDark: "121212",
+    textLight: "FFFFFF",
+    textMuted: "6B7280",
+  },
+  fonts: {
+    header: "Trebuchet MS",
+    body: "Calibri",
+    caption: "Calibri Light",
+    number: "Georgia",
+  },
+  sizes: {
+    title: 40,
+    subtitle: 18,
+    sectionHeader: 24,
+    body: 15,
+    caption: 11,
+    bigNumber: 60,
+  },
+};
+
+// ─── 유틸리티 (옵션 객체는 항상 팩토리 함수로) ───
+const makeShadow = () => ({
+  type: "outer", color: "000000", blur: 6, offset: 2, angle: 135, opacity: 0.12
+});
+
+// ─── 프레젠테이션 생성 ───
+let pres = new pptxgen();
+pres.layout = "LAYOUT_16x9";
+pres.author = "Design-to-PPTX Skill";
+pres.title = "프레젠테이션 제목";
+
+// ─── 슬라이드별 생성 ───
+// ... (각 슬라이드 코드)
+
+// ─── 저장 ───
+pres.writeFile({ fileName: "/home/claude/output.pptx" });
 ```
-배경: #FFFFFF (White)
-제목: #121212 (Neutral/10)
-본문: #45464C (Neutral/30)
-강조: #2462F7 (Blue/50)
+
+### 슬라이드별 디자인 가이드
+
+#### 타이틀 슬라이드
+- 다크 배경 (Dark BG 컬러) + 화이트 텍스트
+- 제목: 36-44pt Bold, 중앙 또는 좌측 정렬
+- 부제: 16-18pt, 뮤트 컬러 또는 Secondary 컬러
+- 하단에 날짜/발표자 정보 (12pt, 뮤트)
+- Accent 컬러로 사이드 바 또는 기하학적 장식 요소
+
+#### 콘텐츠 슬라이드
+- 라이트 배경 (Background 컬러)
+- **매 슬라이드마다 레이아웃을 반드시 변화시킨다** — 동일 레이아웃 연속 금지
+- 레이아웃 옵션 (돌아가며 사용):
+  - **2컬럼**: 텍스트 좌측 + 시각요소 우측
+  - **아이콘+텍스트 그리드**: 2×2 또는 1×3 배열
+  - **큰 숫자 콜아웃**: 임팩트 있는 통계 수치 + 설명
+  - **타임라인/프로세스**: 번호가 매겨진 스텝 흐름
+  - **비교 컬럼**: Before/After, Option A/B
+  - **카드 그리드**: 컬러 블록 카드에 아이콘+제목+설명
+- 모든 슬라이드에 반드시 시각 요소 포함 (아이콘, 도형, 차트, 컬러 블록)
+
+#### 데이터 슬라이드
+- 차트 사용 시 `chartColors`를 브랜드 컬러로 설정
+- 큰 숫자 강조: Georgia Bold 48-72pt + 작은 라벨 (14pt 뮤트)
+- 깔끔한 그리드라인: `valGridLine: { color: "E2E8F0", size: 0.5 }`
+- 단일 시리즈면 범례 숨김 (`showLegend: false`)
+
+#### 마무리 슬라이드
+- 다크 배경으로 타이틀과 호응 ("샌드위치 구조")
+- 핵심 메시지 또는 CTA 강조
+- 연락처, 감사 메시지
+
+### 아이콘 활용
+
+시각적 풍부함을 위해 react-icons를 적극 활용한다.
+
+아이콘 선택 기준:
+- 콘텐츠의 의미와 직결되는 아이콘 선택
+- 한 슬라이드에 같은 스타일의 아이콘 세트 사용 (fa, md, hi 혼용 금지)
+- 아이콘 컬러는 Accent 또는 Primary
+- 아이콘 뒤에 컬러 서클(OVAL)을 깔아 강조감 부여
+
+```javascript
+// 아이콘 렌더링 유틸리티
+const React = require("react");
+const ReactDOMServer = require("react-dom/server");
+const sharp = require("sharp");
+
+function renderIconSvg(IconComponent, color, size = 256) {
+  return ReactDOMServer.renderToStaticMarkup(
+    React.createElement(IconComponent, { color, size: String(size) })
+  );
+}
+
+async function iconToBase64Png(IconComponent, color, size = 256) {
+  const svg = renderIconSvg(IconComponent, color, size);
+  const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+  return "image/png;base64," + pngBuffer.toString("base64");
+}
 ```
 
-**데이터 시각화**
-```
-차트 1: #2462F7 (Blue/50)
-차트 2: #13BD47 (Green/50)
-차트 3: #FF8A2E (Orange/50)
-그리드: #E6E6EB (Neutral/92)
-```
+### 디자인 퀄리티 7원칙
 
-### 2. 접근성 원칙
-
-- 제목 텍스트: 최소 7:1 명도 대비
-- 본문 텍스트: 최소 4.5:1 명도 대비
-- 큰 텍스트(24pt+): 최소 3:1 대비
-- 색상만으로 정보 구분 금지 (아이콘/패턴 병행)
-
-### 3. 피해야 할 조합
-
-❌ Red + Green (색맹 고려)  
-❌ 슬라이드당 4가지 이상의 강조 컬러  
-❌ 같은 명도의 컬러 조합
-
-### 4. 권장 조합
-
-✅ Blue/50 + Neutral 계열  
-✅ Navyblue + White + Skyblue  
-✅ Green/50 + Blue/50 (성장, 혁신)
-
-### 5. 환경별 최적화
-
-**대형 강당/밝은 조명**
-- 텍스트: `#121212` (더 진하게)
-- 배경: `#FFFFFF` (순백색)
-
-**온라인/녹화**
-- 다크 모드 고려
-- 텍스트 크기 1.2배 확대
-
+1. **No Text-Only** — 텍스트만 있는 슬라이드 절대 금지, 반드시 시각 요소 동반
+2. **Layout Variety** — 연속 2개 이상 같은 레이아웃 사용 금지
+3. **Color Dominance** — Primary 60%, Secondary 25%, Accent 15% 비율 유지
+4. **Typographic Hierarchy** — 제목/소제목/본문/캡션의 크기 차이를 분명히
+5. **Whitespace Respect** — 슬라이드 가장자리 최소 0.5", 요소 간 최소 0.3"
+6. **Consistency** — 폰트, 컬러, 간격의 일관된 적용
+7. **No Accent Lines Under Titles** — 타이틀 아래 장식 라인은 AI 냄새의 전형, 절대 사용 금지
 
 ---
 
+## Step 5: QA (필수)
 
+**첫 렌더링은 거의 항상 문제가 있다. QA는 버그 사냥이다.**
 
-## 고급 디자인 패턴
+### 5-1. 콘텐츠 QA
 
-
-
-### 인포그래픽 디자인 레퍼런스
-https://pin.it/6eVrzwHOT
-
-### 조형 디자인 레퍼런스
-https://pin.it/5dJ97z6BJ
-
-
----
-
-
-## 출력 및 파일 구조
-
-### 파일 저장 규칙
-```
-slides/
-├── slide-01.html  (표지)
-├── slide-02.html  (목차)
-├── slide-03.html  (섹션 구분)
-├── slide-04.html  (내용)
-├── ...
-└── slide-XX.html  (마무리)
+```bash
+pip install "markitdown[pptx]" --break-system-packages
+python -m markitdown output.pptx
 ```
 
-### 파일 명명 규칙
-- 2자리 숫자 사용: `slide-01.html`, `slide-02.html`
-- 순서대로 명명
-- 특수문자, 공백 사용 금지
+확인 사항:
+- 기획 내용이 빠짐없이 반영되었는가
+- 오탈자, 순서 오류가 없는가
+- 플레이스홀더 텍스트가 남아있지 않은가
+
+### 5-2. 비주얼 QA
+
+```bash
+python /mnt/skills/public/pptx/scripts/office/soffice.py --headless --convert-to pdf output.pptx
+pdftoppm -jpeg -r 150 output.pdf slide
+```
+
+생성된 이미지를 확인하며 아래 항목을 점검:
+
+- 요소 겹침 (텍스트가 도형을 뚫고 나옴)
+- 텍스트 잘림 또는 오버플로우
+- 불균형한 여백
+- 저대비 텍스트 (밝은 배경에 밝은 글씨)
+- 정렬 불일치
+- 아이콘 깨짐 또는 저해상도
+- 컬러 일관성 (브랜드 컬러 이탈)
+
+### 5-3. 수정 루프
+
+1. 이슈 발견 → 코드 수정 → 재생성
+2. 수정된 슬라이드를 다시 이미지 변환 → 재확인
+3. **최소 1회 수정-확인 사이클을 완료해야 최종 출력 가능**
 
 ---
 
-## 워크플로우
+## Step 6: 출력
 
-1. **분석**: `slide-outline.md` 읽고 콘텐츠 파악
-2. **테마 결정**: 색상 팔레트, 전체적인 무드 선택
-3. **구조 설계**: 슬라이드별 레이아웃 타입 결정
-4. **디자인 실행**: 각 슬라이드 HTML 생성
-5. **일관성 검토**: 전체 프레젠테이션의 통일성 확인
-6. **저장**: `slides/` 디렉토리에 파일 저장
+```bash
+cp output.pptx /mnt/user-data/outputs/[파일명].pptx
+```
+
+파일명은 기획 내용의 주제를 반영하여 명명한다. (예: `Q1_마케팅_전략_발표.pptx`)
 
 ---
 
-## 주의사항
+## 치명적 금지사항 (파일 손상 방지)
 
-1. **웹폰트**: Pretendard CDN 링크 항상 포함
-2. **이미지 경로**: 절대 경로 또는 URL 사용
-3. **호환성**: 모든 색상에 # 포함
-4. **텍스트 규칙**: div/span에 직접 텍스트 금지
+| 금지 사항 | 이유 | 올바른 방법 |
+|----------|------|------------|
+| `color: "#FF0000"` | 파일 손상 | `color: "FF0000"` |
+| `color: "00000020"` (8자리) | 파일 손상 | `opacity: 0.12` 별도 지정 |
+| `shadow.offset` 음수 | 파일 손상 | `angle: 270` + 양수 offset |
+| `"•"` 유니코드 불릿 | 이중 불릿 | `bullet: true` |
+| 옵션 객체 재사용 | 값 변형 | 팩토리 함수로 매번 생성 |
+| `lineSpacing` + bullets | 과도한 간격 | `paraSpaceAfter` 사용 |
